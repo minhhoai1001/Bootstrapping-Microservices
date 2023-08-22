@@ -11,8 +11,8 @@ services:
      - "4000:80"
     environment:
       - PORT=80
-      - AWS_ACCESS_KEY=AKIASVI7VPSFBLOKYON5
-      - AWS_SECRET_KEY=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
+      - AWS_ACCESS_KEY=<access key>
+      - AWS_SECRET_KEY=<secret key>
     restart: "no"
 
   video-streaming:
