@@ -18,8 +18,8 @@ services:
      - "4001:80"
     environment:
       - PORT=80
-      - AWS_ACCESS_KEY=<access key>
-      - AWS_SECRET_KEY=<secret key>
+      - AWS_ACCESS_KEY=AKIASVI7VPSFDYFGK24R
+      - AWS_SECRET_KEY=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
     restart: "no"
 
   video-streaming:

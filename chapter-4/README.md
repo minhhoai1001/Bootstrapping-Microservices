@@ -304,3 +304,51 @@ MongoDB is also known to have high performance and is extremely scalable.
 Later, we’ll have a way for our users to upload their own videos and populate the database with relevant details, but we don’t yet have any way to do this in our application.
 
   We could test our code by replacing the database with some kind of simulated version of it. I’m talking about mocking the database. (We first talked about mocking earlier in this chapter.) Another way we can do this is to use a *database fixture*, which is a piece of test data that we load into our database purely for testing.
+
+  But before we can use Studio 3T to load example data into our database, we first
+  must have our database up and running. We can do that by booting our application. If
+  you haven’t yet done so, open a terminal and start your application: 
+  
+    ```
+    $ docker-compose up --build
+    ```
+
+    After starting our application, we now have a MongoDB database server running in a
+container. Because we mapped the standard MongoDB port `27017` to port `4000` on
+our development workstation, we can now access the database from Studio 3T by connecting to `localhost:4000`
+
+  To load this data using Studio 3T, open that application, create a new database
+called `video-streaming`, create a collection called `videos`, and then insert a document
+into that collection.\
+
+- TESTING OUR UPDATED APPLICATION
+
+  Install the mongodb driver package from npm for video-streaming
+  ```
+  $ cd chaper-4/example-3/video-streaming
+  $ npm install --save mongodb
+  ```
+
+  You should already have the application running from the last section. We needed
+it there for the database, so we could load our test data.
+
+  ```
+  $ docker-compose up --build
+  ```
+
+  Open your browser and navigate to this
+  link: http://localhost:4002/video?id=5d9e690ad76fe06a3d7ae416 
+  If you change the ID in the test data, you also need to update the ID in this URL.
+
+### Adding a database server in production
+Once we have built our production Kubernetes cluster, we can easily deploy a MongoDB database in a way that is similar to what we’ve just done with Docker Compose.
+In fact, that’s what we will do in chapter 7 because that’s the easiest way for us to get
+our database server into production.
+
+Beyond that though, I recommend that you keep your database separate to your
+cluster. You can run it on a separate VM, or you could use an external managed database. The reason for this is to keep the production cluster stateless.
+
+### Database-per-microservice or database-per-application?
+In a microservices architecture, it is recommended to have only one database per microservice. This is because each microservice should encapsulate its data within itself, in the same way that data is encapsulated within an object in object-oriented programming. Sharing databases between microservices or making a database the integration point between microservices can lead to architectural and scalability problems. 
+
+By restricting data to the code that directly encapsulates it, we can safely evolve the structure of our data over time because changes to it can be hidden within the microservice. This technique, when combined with careful design of REST APIs, allows us to avoid propagating breakages and problems from one microservice to other parts of the application .
