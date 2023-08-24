@@ -49,7 +49,7 @@ function main() {
         
             app.get("/video", (req, res) => {
                 // Specifies the video ID via an HTTP query parameter. This is a MongoDB document ID.
-                const videoId = new mongodb.ObjectID(req.query.id);
+                const videoId = new mongodb.ObjectId(req.query.id);
                 // Queries the database to find a single video by the requested ID
                 videosCollection.findOne({ _id: videoId })
                     .then(videoRecord => {
